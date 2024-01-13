@@ -1,4 +1,5 @@
-import 'package:citrus_blood/apps/map_app/presentation/pages/home_page.dart';
+import 'package:citrus_blood/apps/auth/presentation/pages/login_page.dart';
+import 'package:citrus_blood/core/secrets/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,11 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false, // remove debug banner
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-        useMaterial3: true,
-      ),
-      home: const HomePage(),
+      theme: theme,
+      home: const LoginPage(),
     );
   }
 }
