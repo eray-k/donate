@@ -12,6 +12,8 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
+def mapsApiKey = localProperties.getProperty('MAPS_API_KEY')
+
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
@@ -46,10 +48,11 @@ android {
         applicationId "com.example.citrus_blood"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders += [MAPS_API_KEY: mapsApiKey]
     }
 
     buildTypes {
