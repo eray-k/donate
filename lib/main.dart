@@ -1,9 +1,12 @@
 import 'package:citrus_blood/apps/auth/presentation/pages/login_page.dart';
 import 'package:citrus_blood/core/secrets/theme/theme.dart';
+import 'package:citrus_blood/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await inject(); //Dependency Injection
   runApp(const ProviderScope(child: MyApp()));
 }
 

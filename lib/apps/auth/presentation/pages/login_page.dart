@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Theme.of(context).colorScheme.primary,
                 ), // Email Icon
                 hintText: 'Email Address',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
             verticalSpacer(16.0),
@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Theme.of(context).colorScheme.primary,
                 ), // Lock Icon
                 hintText: 'Password',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
             verticalSpacer(16.0),
