@@ -1,3 +1,4 @@
+import 'package:citrus_blood/apps/auth/presentation/widgets/custom_field_widget.dart';
 import 'package:citrus_blood/core/ui/widgets.dart/wide_elevated_button.dart';
 import 'package:flutter/material.dart';
 
@@ -28,40 +29,24 @@ class _LoginPageState extends State<LoginPage> {
       resizeToAvoidBottomInset: false, // Avoids overflow
       body: Center(
           child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 300),
+        constraints: const BoxConstraints(maxWidth: 250),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Image(
               image: AssetImage("assets/images/logo_shadow.png"),
-              width: 100,
+              width: 145,
             ),
-            verticalSpacer(16.0), //Vertical Spacer
-            TextField(
-              // Email field
-              controller: emailController,
-              decoration: InputDecoration(
-                icon: Icon(
-                  Icons.email,
-                  color: Theme.of(context).colorScheme.primary,
-                ), // Email Icon
-                hintText: 'Email Address',
-                border: const OutlineInputBorder(),
-              ),
-            ),
+            verticalSpacer(45.0),
+            CustomTextField(
+                controller: emailController,
+                icon: Icons.email,
+                hintText: "Email Address"),
             verticalSpacer(16.0),
-            TextField(
-              // Password field
-              controller: passwordController,
-              decoration: InputDecoration(
-                icon: Icon(
-                  Icons.lock,
-                  color: Theme.of(context).colorScheme.primary,
-                ), // Lock Icon
-                hintText: 'Password',
-                border: const OutlineInputBorder(),
-              ),
-            ),
+            CustomTextField(
+                controller: passwordController,
+                icon: Icons.lock,
+                hintText: "Password"),
             verticalSpacer(16.0),
             WideElevatedButton(
                 // Login Button
@@ -76,15 +61,16 @@ class _LoginPageState extends State<LoginPage> {
                     ));
                   }
                 },
-                child: const Text("Sign In")),
-            verticalSpacer(4.0),
+                child: const Text(
+                  "Sign In",
+                  textScaleFactor: 1.5,
+                )),
             TextButton(
               onPressed: () {},
-              child: const Text("Don't have an account?",
-                  style: TextStyle(fontSize: 12)),
+              child: Text("Don't have an account?",
+                  style: TextStyle(
+                      fontSize: 12, color: Colors.black.withOpacity(0.4))),
             ),
-            verticalSpacer(12.0),
-
             WideElevatedButton(
                 // Login Button
                 onPressed: () {
