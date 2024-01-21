@@ -31,11 +31,10 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.bloodtype,
-              size: 100,
-              color: Theme.of(context).colorScheme.primary,
-            ), // Blood Icon will be here
+            const Image(
+              image: AssetImage("assets/images/logo_shadow.png"),
+              width: 100,
+            ),
             verticalSpacer(16.0), //Vertical Spacer
             TextField(
               // Email field
