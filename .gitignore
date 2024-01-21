@@ -45,3 +45,7 @@ app.*.map.json
 
 # Secrets
 *_key.dart
+
+# Generated files
+*.g.dart
+*.freezed.dart

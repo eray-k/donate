@@ -6,4 +6,7 @@ final sl = GetIt.instance;
 Future<void> inject() async {
   //Services
   sl.registerSingleton(const LocationService());
+
+  //Repositories
+  //sl.registerSingleton(const ());
 }
