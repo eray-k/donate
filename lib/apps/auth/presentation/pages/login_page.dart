@@ -1,3 +1,4 @@
+import 'package:citrus_blood/core/ui/widgets.dart/wide_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/toolset/ui/ui_tools.dart';
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             verticalSpacer(16.0),
-            ElevatedButton(
+            WideElevatedButton(
                 // Login Button
                 onPressed: () {
                   if (emailController.text == "asdf" &&
@@ -75,7 +76,6 @@ class _LoginPageState extends State<LoginPage> {
                     ));
                   }
                 },
-                style: ElevatedButtonTheme.of(context).style,
                 child: const Text("Sign In")),
             verticalSpacer(4.0),
             TextButton(
@@ -85,10 +85,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
             verticalSpacer(12.0),
 
-            ElevatedButton(
+            WideElevatedButton(
                 // Login Button
-                onPressed: () {},
-                style: ElevatedButtonTheme.of(context).style!.copyWith(
+                onPressed: () {
+                  //TODO: Implement Google Sign In
+                },
+                style: ElevatedButtonTheme.of(context).style?.copyWith(
                       backgroundColor:
                           const MaterialStatePropertyAll(Colors.blue),
                     ),
