@@ -1,5 +1,5 @@
 import 'package:citrus_blood/apps/auth/presentation/widgets/custom_field_widget.dart';
-import 'package:citrus_blood/core/ui/widgets.dart/wide_elevated_button.dart';
+import 'package:citrus_blood/core/ui/widgets/wide_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/toolset/ui/ui_tools.dart';
@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Image(
-              image: AssetImage("assets/images/logo_shadow.png"),
+              image: AssetImage("assets/images/logo_flat.png"),
               width: 145,
             ),
             verticalSpacer(45.0),

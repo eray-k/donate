@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:citrus_blood/apps/map_app/presentation/controller/location_controller.dart';
+import 'package:citrus_blood/apps/map_app/presentation/widgets/menu_widget.dart';
+import 'package:citrus_blood/core/ui/widgets/custom_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,11 +11,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/toolset/ui/custom_icons_icons.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  bool menuOpened = false;
+  @override
+  Widget build(BuildContext context) {
     final location = ref.watch(locationProvider);
     return Scaffold(
         body: ColoredBox(
@@ -20,29 +29,41 @@ class HomePage extends ConsumerWidget {
       child: SafeArea(
         child: Stack(children: [
           _buildMap(location),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: IconButton.filled(
-                    onPressed: () {},
-                    padding: const EdgeInsets.all(16.0),
-                    icon: const Icon(
-                      CustomIcons.menu,
-                      size: 24,
-                    ),
-                  )),
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Image.asset(
-                      'assets/images/logo_shadow.png',
-                      width: 60,
-                    ),
-                  )),
-            ],
+          if (!menuOpened)
+            Padding(
+                // Menu Button
+                padding: const EdgeInsets.all(16.0),
+                child: IconButton.filled(
+                  onPressed: () {
+                    setState(() {
+                      menuOpened = true;
+                      print(menuOpened);
+                    });
+                  },
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                      Radius.circular(16.0),
+                    )),
+                    iconSize: 36,
+                  ),
+                  icon: const Icon(
+                    CustomIcons.menu,
+                  ),
+                )),
+          Positioned(
+            right: 0,
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: Image.asset(
+                    'assets/images/logo_shadow.png',
+                    width: 60,
+                  ),
+                )),
           ),
           Positioned(
               left: 12,
@@ -64,7 +85,13 @@ class HomePage extends ConsumerWidget {
                     child: Text("List View"),
                   ),
                 ),
-              ))
+              )),
+          if (menuOpened)
+            FoldableMenu(onBackPressed: () {
+              setState(() {
+                menuOpened = false;
+              });
+            })
         ]),
       ),
     ));
@@ -90,9 +117,8 @@ class HomePage extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) => Text(error.toString()),
-      loading: () => const Center(
-          child:
-              CircularProgressIndicator()), // TODO: Add custom progress indicator(blinking logo?)
+      loading: () =>
+          const CustomProgressIndicator(), // TODO: Add custom progress indicator(blinking logo?)
     );
   }
 }
