@@ -1,3 +1,5 @@
+import 'package:donate/apps/auth/data/service/remote/auth_service.dart';
+import 'package:donate/apps/auth/domain/repository/auth_repository.dart';
 import 'package:donate/apps/map_app/data/service/local/location_service.dart';
 import 'package:get_it/get_it.dart';
 
@@ -6,7 +8,8 @@ final sl = GetIt.instance;
 Future<void> inject() async {
   //Services
   sl.registerSingleton(const LocationService());
+  sl.registerSingleton(const AuthService());
 
   //Repositories
-  //sl.registerSingleton(const ());
+  sl.registerSingleton(AuthRepository(sl<AuthService>()));
 }

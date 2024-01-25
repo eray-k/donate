@@ -1,5 +1,7 @@
+import 'package:donate/apps/auth/domain/repository/auth_repository.dart';
 import 'package:donate/apps/auth/presentation/widgets/custom_field_widget.dart';
 import 'package:donate/core/ui/widgets/wide_elevated_button.dart';
+import 'package:donate/dependency_injection.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/toolset/ui/ui_tools.dart';
@@ -50,16 +52,13 @@ class _LoginPageState extends State<LoginPage> {
             verticalSpacer(16.0),
             WideElevatedButton(
                 // Login Button
-                onPressed: () {
-                  if (emailController.text == "asdf" &&
-                      passwordController.text == "1234") {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const HomePage()));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Invalid Credentials"),
-                    ));
-                  }
+                onPressed: () async {
+                  //Login using email and password
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Logging in...")));
+                  await sl<AuthRepository>().login(emailController.text.trim(),
+                      passwordController.text.trim());
+                  print("currentUser: ${sl<AuthRepository>().currentUser}");
                 },
                 child: const Text(
                   "Sign In",
@@ -72,10 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 12, color: Colors.black.withOpacity(0.4))),
             ),
             WideElevatedButton(
-                // Login Button
-                onPressed: () {
-                  //TODO: Implement Google Sign In
-                },
+                onPressed: () {},
                 style: ElevatedButtonTheme.of(context).style?.copyWith(
                       backgroundColor:
                           const MaterialStatePropertyAll(Colors.blue),

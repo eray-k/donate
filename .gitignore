@@ -45,6 +45,7 @@ app.*.map.json
 
 # Secrets
 *_key.dart
+*google-services.json
 
 # Generated files
 *.g.dart
