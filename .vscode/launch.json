@@ -5,18 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "citrus_blood",
+      "name": "donate",
       "request": "launch",
       "type": "dart"
     },
     {
-      "name": "citrus_blood (profile mode)",
+      "name": "donate (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "citrus_blood (release mode)",
+      "name": "donate (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"

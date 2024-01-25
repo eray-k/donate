@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "citrus_blood" "\0"
+            VALUE "CompanyName", "citrus" "\0"
+            VALUE "FileDescription", "donate" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "citrus_blood" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "citrus_blood.exe" "\0"
-            VALUE "ProductName", "citrus_blood" "\0"
+            VALUE "InternalName", "donate" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 citrus. All rights reserved." "\0"
+            VALUE "OriginalFilename", "donate.exe" "\0"
+            VALUE "ProductName", "donate" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

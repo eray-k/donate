@@ -1,4 +1,4 @@
-package com.citrus.donate
+package citrus.donate
 
 import io.flutter.embedding.android.FlutterActivity
 

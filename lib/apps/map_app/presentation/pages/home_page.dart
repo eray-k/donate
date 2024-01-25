@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:citrus_blood/apps/map_app/presentation/controller/location_controller.dart';
-import 'package:citrus_blood/apps/map_app/presentation/widgets/menu_widget.dart';
-import 'package:citrus_blood/core/ui/widgets/custom_progress_widget.dart';
+import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
+import 'package:donate/apps/map_app/presentation/widgets/menu_widget.dart';
+import 'package:donate/core/ui/widgets/custom_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';

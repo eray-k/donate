@@ -1,6 +1,6 @@
-import 'package:citrus_blood/apps/auth/presentation/pages/login_page.dart';
-import 'package:citrus_blood/core/theme/theme.dart';
-import 'package:citrus_blood/dependency_injection.dart';
+import 'package:donate/apps/auth/presentation/pages/login_page.dart';
+import 'package:donate/core/theme/theme.dart';
+import 'package:donate/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

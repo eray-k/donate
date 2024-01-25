@@ -1,4 +1,4 @@
-import 'package:citrus_blood/apps/map_app/data/service/local/location_service.dart';
+import 'package:donate/apps/map_app/data/service/local/location_service.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;

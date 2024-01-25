@@ -1,4 +1,4 @@
-import 'package:citrus_blood/dependency_injection.dart';
+import 'package:donate/dependency_injection.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

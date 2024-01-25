@@ -1,4 +1,4 @@
-import 'package:citrus_blood/apps/auth/domain/model/position.dart';
+import 'package:donate/apps/auth/domain/model/position.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
