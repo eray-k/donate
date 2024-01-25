@@ -28,7 +28,8 @@ class _FoldableMenuState extends State<FoldableMenu>
         animation: controller,
         builder: (context, child) => BackdropFilter(
               filter: ImageFilter.blur(
-                  sigmaX: 2 * controller.value, sigmaY: 2 * controller.value),
+                  sigmaX: 1.2 * controller.value,
+                  sigmaY: 1.2 * controller.value),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
