@@ -61,6 +61,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: IconButton(
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
+                    //Navigator.of(context).pushNamed('/');
                   },
                   icon: Image.asset(
                     'assets/images/logo_shadow.png',

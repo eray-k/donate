@@ -1,9 +1,11 @@
+import 'package:donate/apps/auth/domain/model/account.dart';
+import 'package:donate/apps/auth/presentation/controller/auth_controller.dart';
 import 'package:donate/core/toolset/ui/ui_tools.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/toolset/data_state.dart';
 import '../../../../core/ui/widgets/wide_elevated_button.dart';
 import '../../../../dependency_injection.dart';
-import '../../domain/repository/auth_repository.dart';
 import '../widgets/custom_field_widget.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -20,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   bool termsAccepted = false;
-
+  bool signingUp = false;
   @override
   void dispose() {
     emailController.dispose();
@@ -96,28 +98,43 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   verticalSpacer(16),
                   WideElevatedButton(
-                      onPressed: () async {
-                        if (!termsAccepted ||
-                            passwordController.text ==
-                                confirmPasswordController.text) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      "Please accept the terms and conditions")));
-                          return;
-                        }
-                        //Register using email and password
+                    onPressed: () async {
+                      if (!termsAccepted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Registering...")));
-                        /* await sl<AuthRepository>().register(
-                        emailController.text.trim(),
-                        passwordController.text,
-                        firstNameController.text.trim(),
-                        lastNameController.text.trim()); */
-                        print(
-                            "currentUser: ${sl<AuthRepository>().currentUser}");
-                      },
-                      child: const Text("Register", textScaleFactor: 1.5)),
+                            const SnackBar(
+                                content: Text(
+                                    "Please accept the terms and conditions")));
+                        return;
+                      }
+                      if (passwordController.text !=
+                          confirmPasswordController.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Passwords do not match")));
+                        return;
+                      }
+                      setState(() {
+                        signingUp = true;
+                      });
+                      //Register using email and password
+                      await sl<AuthController>()
+                          .register(Account(
+                              firstName: firstNameController.text.trim(),
+                              lastName: lastNameController.text.trim(),
+                              email: emailController.text.trim(),
+                              password: passwordController.text))
+                          .then((value) {
+                        if (value is DataSuccess) {
+                          Navigator.of(context).popAndPushNamed('/');
+                        }
+                        setState(() {
+                          signingUp = false;
+                        });
+                      });
+                    },
+                    enabled: !signingUp,
+                    child: const Text("Register", textScaleFactor: 1.5),
+                  ),
                   verticalSpacer(16),
                   Text('or',
                       style: TextStyle(color: Colors.black.withOpacity(0.4))),
