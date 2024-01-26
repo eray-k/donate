@@ -5,7 +5,6 @@ import 'package:donate/dependency_injection.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/toolset/ui/ui_tools.dart';
-import '../../../map_app/presentation/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -41,14 +40,18 @@ class _LoginPageState extends State<LoginPage> {
             ),
             verticalSpacer(45.0),
             CustomTextField(
-                controller: emailController,
-                icon: Icons.email,
-                hintText: "Email Address"),
+              controller: emailController,
+              icon: Icons.email,
+              hintText: "Email Address",
+              keyboardType: TextInputType.emailAddress,
+            ),
             verticalSpacer(16.0),
             CustomTextField(
-                controller: passwordController,
-                icon: Icons.lock,
-                hintText: "Password"),
+              controller: passwordController,
+              icon: Icons.lock,
+              hintText: "Password",
+              isPassword: true,
+            ),
             verticalSpacer(16.0),
             WideElevatedButton(
                 // Login Button
@@ -65,7 +68,9 @@ class _LoginPageState extends State<LoginPage> {
                   textScaleFactor: 1.5,
                 )),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed("/register");
+              },
               child: Text("Don't have an account?",
                   style: TextStyle(
                       fontSize: 12, color: Colors.black.withOpacity(0.4))),
@@ -79,28 +84,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: const Text("Continue with Google")),
             verticalSpacer(4.0),
             // Terms and Conditions
-
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Checkbox(
-                  value: termsAccepted,
-                  onChanged: (value) {
-                    setState(() {
-                      termsAccepted = value!;
-                    });
-                  },
-                ),
-                const SizedBox(
-                  width: 200,
-                  child: Text(
-                    "I agree to the Terms of Service and Privacy Policy",
-                    style: TextStyle(fontSize: 12),
-                    overflow: TextOverflow.fade,
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       )),

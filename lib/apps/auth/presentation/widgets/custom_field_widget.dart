@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
-      {super.key, this.controller, required this.icon, this.hintText = ''});
+      {super.key,
+      this.controller,
+      this.icon,
+      this.hintText = '',
+      this.keyboardType,
+      this.isPassword = false});
   final TextEditingController? controller;
-  final IconData icon;
+  final IconData? icon;
   final String hintText;
+  final TextInputType? keyboardType;
+  final bool isPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +27,17 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         // Email field
         controller: controller,
+        keyboardType: keyboardType,
+        obscureText: isPassword,
+        enableSuggestions: !isPassword,
+        autocorrect: !isPassword,
         decoration: InputDecoration(
-          icon: Icon(
-            icon,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-          ), // Email Icon
+          icon: icon != null
+              ? Icon(
+                  icon,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                )
+              : null, // Email Icon
           hintText: hintText,
           border: InputBorder.none,
         ),

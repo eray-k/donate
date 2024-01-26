@@ -1,4 +1,5 @@
 // ignore: depend_on_referenced_packages
+import 'package:donate/apps/auth/presentation/pages/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,15 +27,30 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false, // remove debug banner
       theme: theme,
-      home: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const HomePage();
-            } else {
-              return const LoginPage();
-            }
-          }),
+      initialRoute: '/login', // initial route
+      routes: {
+        '/': (context) => const MyInitialRoute(),
+        '/login': (context) => const LoginPage(),
+        '/home': (context) => const HomePage(),
+        '/register': (context) => const RegisterPage(),
+      },
     );
+  }
+}
+
+class MyInitialRoute extends StatelessWidget {
+  const MyInitialRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const HomePage();
+          } else {
+            return const LoginPage();
+          }
+        });
   }
 }
