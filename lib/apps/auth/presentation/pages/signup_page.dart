@@ -1,5 +1,6 @@
 import 'package:donate/apps/auth/domain/model/account.dart';
 import 'package:donate/apps/auth/presentation/controller/auth_controller.dart';
+import 'package:donate/apps/auth/presentation/widgets/google_sign_in_widget.dart';
 import 'package:donate/core/toolset/ui/ui_tools.dart';
 import 'package:flutter/material.dart';
 
@@ -139,14 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Text('or',
                       style: TextStyle(color: Colors.black.withOpacity(0.4))),
                   verticalSpacer(16),
-                  //TODO: Google signup button
-                  WideElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButtonTheme.of(context).style?.copyWith(
-                            backgroundColor:
-                                const MaterialStatePropertyAll(Colors.blue),
-                          ),
-                      child: const Text("Continue with Google")),
+                  const GoogleSignInButton(),
                 ],
               ),
             )),

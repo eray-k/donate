@@ -1,5 +1,6 @@
 import 'package:donate/apps/auth/presentation/controller/auth_controller.dart';
 import 'package:donate/apps/auth/presentation/widgets/custom_field_widget.dart';
+import 'package:donate/apps/auth/presentation/widgets/google_sign_in_widget.dart';
 import 'package:donate/core/ui/widgets/wide_elevated_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                   signinIn = true;
                 });
                 //Login using email and password
-                await sl<AuthController>()
-                    .login(emailController.text, passwordController.text, (e) {
+                await sl<AuthController>().loginWithEmailAndPassword(
+                    emailController.text, passwordController.text, (e) {
                   setState(() {
                     signinIn = false;
                   });
@@ -101,13 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(
                       fontSize: 12, color: Colors.black.withOpacity(0.4))),
             ),
-            WideElevatedButton(
-                onPressed: () {},
-                style: ElevatedButtonTheme.of(context).style?.copyWith(
-                      backgroundColor:
-                          const MaterialStatePropertyAll(Colors.blue),
-                    ),
-                child: const Text("Continue with Google")),
+            const GoogleSignInButton(),
             verticalSpacer(4.0),
             // Terms and Conditions
           ],

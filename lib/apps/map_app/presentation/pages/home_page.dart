@@ -38,7 +38,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                   onPressed: () {
                     setState(() {
                       menuOpened = true;
-                      print(menuOpened);
                     });
                   },
                   style: IconButton.styleFrom(

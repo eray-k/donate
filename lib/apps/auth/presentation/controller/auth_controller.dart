@@ -9,14 +9,20 @@ import '../../domain/repository/auth_repository.dart';
 class AuthController {
   final AuthRepository _authRepository;
   const AuthController(this._authRepository);
-  FutureOr<DataState<User>> login(String email, String password,
+  FutureOr<DataState<User>> loginWithEmailAndPassword(String email,
+      String password, Function(FirebaseAuthException e) onError) async {
+    final data =
+        await _authRepository.loginWithEmailAndPassword(email, password);
+    if (data is DataFailed<User>) {
+      onError(data.error as FirebaseAuthException);
+    }
+    return data;
+  }
+
+  FutureOr<DataState<User>> loginWithGoogle(
       Function(FirebaseAuthException e) onError) async {
-    final data = await _authRepository.login(email, password);
-    if (data is DataSuccess<User>) {
-      print("Login successful");
-      print("Current user changed to: ${data.data?.email}");
-    } else {
-      print("Login failed: ${data.error}");
+    final data = await _authRepository.loginWithGoogle();
+    if (data is DataFailed<User>) {
       onError(data.error as FirebaseAuthException);
     }
     return data;
@@ -24,12 +30,7 @@ class AuthController {
 
   Future<DataState<User>> register(Account account) async {
     final data = await _authRepository.register(account);
-    if (data is DataSuccess<User>) {
-      print("Login successful");
-      print("Current user changed to: ${data.data?.email}");
-    } else {
-      print("Login failed: ${data.error}");
-    }
+    if (data is DataFailed<User>) {}
     return data;
   }
 }
