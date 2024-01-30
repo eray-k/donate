@@ -42,10 +42,10 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator>
           animation: controller,
           builder: (context, child) => Opacity(
               opacity: controller.value,
-              child: const SizedBox(
-                width: 60,
-                height: 60,
-                child: Image(
+              child: SizedBox(
+                width: 55 + 10 * controller.value,
+                height: 55 + 10 * controller.value,
+                child: const Image(
                   image: AssetImage("assets/images/logo_flat.png"),
                 ),
               )),

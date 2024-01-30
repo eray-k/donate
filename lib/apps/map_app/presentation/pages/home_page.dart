@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
-
 import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
 import 'package:donate/apps/map_app/presentation/widgets/menu_widget.dart';
 import 'package:donate/core/ui/widgets/custom_progress_widget.dart';
@@ -28,74 +26,77 @@ class _HomePageState extends ConsumerState<HomePage> {
         body: ColoredBox(
       color: Theme.of(context).colorScheme.primary,
       child: SafeArea(
-        child: Stack(children: [
-          _buildMap(location),
-          if (!menuOpened)
-            Padding(
-                // Menu Button
-                padding: const EdgeInsets.all(16.0),
-                child: IconButton.filled(
-                  onPressed: () {
-                    setState(() {
-                      menuOpened = true;
-                    });
-                  },
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Theme.of(context).colorScheme.primary,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    )),
-                    iconSize: 36,
-                  ),
-                  icon: const Icon(
-                    CustomIcons.menu,
+        child: ColoredBox(
+          color: Colors.white,
+          child: Stack(children: [
+            _buildMap(location),
+            if (!menuOpened)
+              Padding(
+                  // Menu Button
+                  padding: const EdgeInsets.all(16.0),
+                  child: IconButton.filled(
+                    onPressed: () {
+                      setState(() {
+                        menuOpened = true;
+                      });
+                    },
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Theme.of(context).colorScheme.primary,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                        Radius.circular(16.0),
+                      )),
+                      iconSize: 36,
+                    ),
+                    icon: const Icon(
+                      CustomIcons.menu,
+                    ),
+                  )),
+            Positioned(
+              right: 0,
+              child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: IconButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      //Navigator.of(context).pushNamed('/');
+                    },
+                    icon: Image.asset(
+                      'assets/images/logo_shadow.png',
+                      width: 60,
+                    ),
+                  )),
+            ),
+            Positioned(
+                left: 12,
+                bottom: 24,
+                child: Opacity(
+                  opacity: 0.8,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      //TODO: Add navigation to list view
+                    },
+                    style: ElevatedButtonTheme.of(context).style?.copyWith(
+                          shape: MaterialStateProperty.resolveWith(
+                              (_) => RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  )),
+                        ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 64.0),
+                      child: Text("List View"),
+                    ),
                   ),
                 )),
-          Positioned(
-            right: 0,
-            child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: IconButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                    //Navigator.of(context).pushNamed('/');
-                  },
-                  icon: Image.asset(
-                    'assets/images/logo_shadow.png',
-                    width: 60,
-                  ),
-                )),
-          ),
-          Positioned(
-              left: 12,
-              bottom: 24,
-              child: Opacity(
-                opacity: 0.8,
-                child: ElevatedButton(
-                  onPressed: () {
-                    //TODO: Add navigation to list view
-                  },
-                  style: ElevatedButtonTheme.of(context).style?.copyWith(
-                        shape: MaterialStateProperty.resolveWith(
-                            (_) => RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                )),
-                      ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 64.0),
-                    child: Text("List View"),
-                  ),
-                ),
-              )),
-          if (menuOpened)
-            FoldableMenu(onBackPressed: () {
-              setState(() {
-                menuOpened = false;
-              });
-            })
-        ]),
+            if (menuOpened)
+              FoldableMenu(onBackPressed: () {
+                setState(() {
+                  menuOpened = false;
+                });
+              })
+          ]),
+        ),
       ),
     ));
   }
