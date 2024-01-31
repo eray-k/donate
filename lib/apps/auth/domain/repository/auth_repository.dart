@@ -45,10 +45,10 @@ class AuthRepository {
     }
   }
 
-  FutureOr<DataState<User>> register(Account account) async {
+  FutureOr<DataState<User>> register(Account account, String password) async {
     try {
       final credential = await authService.registerWithEmailAndPassword(
-          email: account.email, password: account.password);
+          email: account.email, password: password);
       debugPrint("Registered account: ${credential.user?.email}");
       return DataSuccess(credential.user!);
     } on FirebaseAuthException catch (e) {

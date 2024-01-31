@@ -119,11 +119,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                       //Register using email and password
                       await sl<AuthController>()
-                          .register(Account(
-                              firstName: firstNameController.text.trim(),
-                              lastName: lastNameController.text.trim(),
-                              email: emailController.text.trim(),
-                              password: passwordController.text))
+                          .register(
+                              Account(
+                                  displayName:
+                                      "${firstNameController.text.trim()} ${lastNameController.text.trim()}",
+                                  email: emailController.text.trim()),
+                              passwordController.text)
                           .then((value) {
                         if (value is DataSuccess) {
                           Navigator.of(context).popAndPushNamed('/');

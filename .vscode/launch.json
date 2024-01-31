@@ -5,21 +5,48 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "donate",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "donate (profile mode)",
+      "name": "LOCAL DEVICE",
       "request": "launch",
       "type": "dart",
+      "toolArgs": [
+        "--dart-define", 
+        "USE_FIREBASE_EMU=true", 
+        "--dart-define", 
+        "FIREBASE_EMU_URL=192.168.1.26"
+      ]
+    },
+    {
+      "name": "PRODUCTION",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define", 
+        "USE_FIREBASE_EMU=false"
+      ]
+    },
+    {
+      "name": "PROFILE w/EMULATOR",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define", 
+        "USE_FIREBASE_EMU=true", 
+        "--dart-define", 
+        "FIREBASE_EMU_URL=192.168.1.26"
+      ],
       "flutterMode": "profile"
     },
     {
-      "name": "donate (release mode)",
+      "name": "RELEASE w/EMULATOR",
       "request": "launch",
       "type": "dart",
+      "toolArgs": [
+        "--dart-define", 
+        "USE_FIREBASE_EMU=true", 
+        "--dart-define", 
+        "FIREBASE_EMU_URL=192.168.1.26"
+      ],
       "flutterMode": "release"
-    }
+    },
   ]
 }

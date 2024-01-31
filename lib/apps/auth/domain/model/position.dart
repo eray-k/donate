@@ -7,7 +7,6 @@ class Position {
   final double latitude;
   final double longitude;
   final DateTime? timestamp; // When is the data acquired
-  //If timestamp is null, then it's the current position
 
   Position(
       {required this.latitude,
