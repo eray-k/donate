@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
 import 'package:donate/apps/map_app/presentation/widgets/menu_widget.dart';
 import 'package:donate/core/ui/widgets/custom_progress_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -59,8 +58,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   padding: const EdgeInsets.all(16.0),
                   child: IconButton(
                     onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                      //Navigator.of(context).pushNamed('/');
+                      Navigator.of(context).pushNamed('/account');
                     },
                     icon: Image.asset(
                       'assets/images/logo_shadow.png',
