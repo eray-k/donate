@@ -27,7 +27,6 @@ class _LifecycleWatcherState extends State<LifecycleWatcher>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     sl<AuthRepository>().updateLocation();
-    debugPrint('state = $state');
   }
 
   @override
