@@ -72,7 +72,7 @@ class AuthRepository {
   }
 
   FutureOr<Account> getCurrentAccount({bool refresh = false}) async {
-    if (refresh || currentAccount != null) {
+    if (!refresh && currentAccount != null) {
       return currentAccount!;
     }
     final docRef =

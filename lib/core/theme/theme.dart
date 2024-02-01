@@ -19,5 +19,12 @@ final theme = ThemeData(
       backgroundColor: primaryColor,
     ),
   ),
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+        foregroundColor: Colors.grey,
+        minimumSize: const Size.fromHeight(0),
+        alignment: AlignmentDirectional.centerStart,
+        textStyle: const TextStyle(fontSize: 20)),
+  ),
   useMaterial3: true,
 );

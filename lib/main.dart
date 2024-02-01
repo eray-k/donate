@@ -1,5 +1,6 @@
 import 'package:donate/apps/auth/domain/repository/auth_repository.dart';
 import 'package:donate/apps/auth/presentation/pages/signup_page.dart';
+import 'package:donate/apps/map_app/presentation/pages/list_view.dart';
 import 'package:donate/core/toolset/app_start.dart';
 import 'package:donate/core/toolset/lifecycle_watcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/register': (context) => const RegisterPage(),
         '/account': (context) => const AccountViewPage(),
+        '/list': (context) => const ListAlertsPage(),
       },
     );
   }

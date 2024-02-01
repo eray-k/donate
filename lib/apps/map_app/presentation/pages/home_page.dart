@@ -66,27 +66,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                   )),
             ),
-            Positioned(
-                left: 12,
-                bottom: 24,
-                child: Opacity(
-                  opacity: 0.8,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      //TODO: Add navigation to list view
-                    },
-                    style: ElevatedButtonTheme.of(context).style?.copyWith(
-                          shape: MaterialStateProperty.resolveWith(
-                              (_) => RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  )),
-                        ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 64.0),
-                      child: Text("List View"),
-                    ),
-                  ),
-                )),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.arrow_upward),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/list');
+                  },
+                  label: const Text('List View'),
+                ),
+              ),
+            ),
             if (menuOpened)
               FoldableMenu(onBackPressed: () {
                 setState(() {
