@@ -28,8 +28,8 @@ class AuthController {
     return data;
   }
 
-  Future<DataState<User>> register(Account account) async {
-    final data = await _authRepository.register(account);
+  Future<DataState<User>> register(Account account, String password) async {
+    final data = await _authRepository.register(account, password);
     if (data is DataFailed<User>) {}
     return data;
   }

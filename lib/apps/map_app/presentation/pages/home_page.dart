@@ -1,8 +1,9 @@
 import 'dart:io';
+import 'package:donate/apps/map_app/domain/model/alert_model.dart';
+import 'package:donate/apps/map_app/presentation/controller/alert_controller.dart';
 import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
 import 'package:donate/apps/map_app/presentation/widgets/menu_widget.dart';
 import 'package:donate/core/ui/widgets/custom_progress_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool menuOpened = false;
   @override
   Widget build(BuildContext context) {
+    final alerts = ref.watch(alertsProvider);
     final location = ref.watch(locationProvider);
     return Scaffold(
         body: ColoredBox(
@@ -29,7 +31,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: ColoredBox(
           color: Colors.white,
           child: Stack(children: [
-            _buildMap(location),
+            _buildMap(alerts, location),
             if (!menuOpened)
               Padding(
                   // Menu Button
@@ -59,8 +61,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   padding: const EdgeInsets.all(16.0),
                   child: IconButton(
                     onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                      //Navigator.of(context).pushNamed('/');
+                      Navigator.of(context).pushNamed('/account');
                     },
                     icon: Image.asset(
                       'assets/images/logo_shadow.png',
@@ -68,27 +69,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                   )),
             ),
-            Positioned(
-                left: 12,
-                bottom: 24,
-                child: Opacity(
-                  opacity: 0.8,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      //TODO: Add navigation to list view
-                    },
-                    style: ElevatedButtonTheme.of(context).style?.copyWith(
-                          shape: MaterialStateProperty.resolveWith(
-                              (_) => RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  )),
-                        ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 64.0),
-                      child: Text("List View"),
-                    ),
-                  ),
-                )),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.arrow_upward),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/list');
+                  },
+                  label: const Text('List View'),
+                ),
+              ),
+            ),
             if (menuOpened)
               FoldableMenu(onBackPressed: () {
                 setState(() {
@@ -101,28 +94,32 @@ class _HomePageState extends ConsumerState<HomePage> {
     ));
   }
 
-  Widget _buildMap(AsyncValue<Position> location) {
+  Widget _buildMap(
+      AsyncValue<List<Alert>> asyncAlerts, AsyncValue<Position> asyncLocation) {
     if (!Platform.isAndroid) {
       return const Text("This app is only available on Android");
     }
-    return location.when(
-      data: (data) {
-        return GoogleMap(
-          initialCameraPosition: CameraPosition(
-            target: LatLng(data.latitude, data.longitude),
-            zoom: 11.0,
-          ),
-          markers: {
-            Marker(
+    if (asyncLocation is AsyncError || asyncAlerts is AsyncError) {
+      debugPrint(asyncLocation.error.toString() + asyncAlerts.error.toString());
+      return const Text("An error occured");
+    } else if (asyncLocation is AsyncLoading || asyncAlerts is AsyncLoading) {
+      return const CustomProgressIndicator();
+    }
+
+    final alertSet = asyncAlerts.value!
+        .map((e) => Marker(
+              infoWindow: InfoWindow(title: e.description),
               markerId: const MarkerId('Your Location'),
-              position: LatLng(data.latitude, data.longitude),
-            )
-          },
-        );
-      },
-      error: (error, stackTrace) => Text(error.toString()),
-      loading: () =>
-          const CustomProgressIndicator(), // TODO: Add custom progress indicator(blinking logo?)
+              position: LatLng(e.position.latitude, e.position.longitude),
+            ))
+        .toSet();
+    final location = asyncLocation.value!;
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: LatLng(location.latitude, location.longitude),
+        zoom: 11.0,
+      ),
+      markers: alertSet,
     );
   }
 }

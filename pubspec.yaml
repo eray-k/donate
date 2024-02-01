@@ -23,6 +23,7 @@ dependencies:
   firebase_auth: ^4.16.0
   google_sign_in: ^6.1.6
   flutter_native_splash: ^2.3.7
+  firebase_core: ^2.24.2
 
 dev_dependencies:
   flutter_test:

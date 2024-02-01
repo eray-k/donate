@@ -45,6 +45,7 @@ app.*.map.json
 
 # Secrets
 *_key.dart
+*firebase_options.dart
 *google-services.json
 
 # Generated files

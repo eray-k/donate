@@ -1,16 +1,18 @@
 import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:donate/apps/auth/data/service/remote/auth_service.dart';
+import 'package:donate/apps/map_app/data/service/local/location_service.dart';
 import 'package:donate/core/toolset/data_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../../dependency_injection.dart';
 import '../model/account.dart';
 
 class AuthRepository {
+  Account? currentAccount;
   final AuthService authService;
-  const AuthRepository(this.authService);
-
+  AuthRepository(this.authService);
   User? get currentUser => authService.currentUser();
 
   FutureOr<DataState<User>> loginWithEmailAndPassword(
@@ -31,12 +33,18 @@ class AuthRepository {
           ? await authService.loginWithGoogle()
           : await authService.loginWithEmailAndPassword(
               email: email, password: password);
-      credential.user?.reload();
-      if (!(credential.user?.emailVerified ?? true)) {
-        debugPrint("Email not verified: ${credential.user?.emailVerified}");
-        await credential.user?.sendEmailVerification();
+      if (credential.user == null) {
+        return DataFailed<User>(FirebaseAuthException(
+            code: 'user-not-found', message: 'User not found'));
       }
-      debugPrint("Signed in as: ${credential.user?.email}");
+      final user = credential.user!;
+      user.reload();
+      if (!user.emailVerified) {
+        debugPrint("Email not verified: ${user.emailVerified}");
+        await user.sendEmailVerification();
+      }
+      debugPrint("Signed in as: ${user.email}");
+      await getCurrentAccount(refresh: true);
       return DataSuccess(
           credential.user!); //What about no user found for this email?
     } on FirebaseAuthException catch (e) {
@@ -45,15 +53,62 @@ class AuthRepository {
     }
   }
 
-  FutureOr<DataState<User>> register(Account account) async {
+  FutureOr<DataState<User>> register(Account account, String password) async {
     try {
       final credential = await authService.registerWithEmailAndPassword(
-          email: account.email, password: account.password);
+          email: account.email, password: password);
       debugPrint("Registered account: ${credential.user?.email}");
+      await getCurrentAccount(refresh: true);
       return DataSuccess(credential.user!);
     } on FirebaseAuthException catch (e) {
       debugPrint("Error occured during register: ${e.message}");
       return DataFailed<User>(e);
     }
+  }
+
+  Future<void> logout() async {
+    currentAccount = null;
+    await FirebaseAuth.instance.signOut();
+  }
+
+  FutureOr<Account> getCurrentAccount({bool refresh = false}) async {
+    if (!refresh && currentAccount != null) {
+      return currentAccount!;
+    }
+    final docRef =
+        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
+    await docRef.get().then((doc) async {
+      if (doc.exists) {
+        debugPrint("User exists, retrieving data");
+        currentAccount = Account.fromDocument(doc.data()!);
+      } else {
+        debugPrint("User does not exist, creating new account in database");
+        currentAccount = Account(
+            displayName: currentUser!.displayName ?? '',
+            email: currentUser!.email ?? '',
+            position: null);
+        await docRef.set(currentAccount!.toDocument());
+      }
+    });
+    await updateLocation();
+    debugPrint("Current account: $currentAccount");
+    return currentAccount!;
+  }
+
+  Future<void> updateCurrentAccount() async {
+    final docRef =
+        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
+    await docRef.update(currentAccount!.toDocument());
+  }
+
+  bool canUpdate = true;
+  Future<void> updateLocation() async {
+    if (!canUpdate) return;
+    canUpdate = false;
+    Future.delayed(const Duration(minutes: 3), () => canUpdate = true);
+    final data = await sl<LocationService>().getLocation();
+    currentAccount!.setPosition(data.latitude, data.longitude);
+    debugPrint("Updating location: ${currentAccount!.position?.timestamp}");
+    await updateCurrentAccount();
   }
 }
