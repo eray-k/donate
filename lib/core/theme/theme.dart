@@ -21,7 +21,7 @@ final theme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-        foregroundColor: Colors.grey,
+        foregroundColor: Colors.black.withOpacity(0.7),
         minimumSize: const Size.fromHeight(0),
         alignment: AlignmentDirectional.centerStart,
         textStyle: const TextStyle(fontSize: 20)),

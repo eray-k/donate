@@ -18,7 +18,6 @@ class Alerts extends _$Alerts {
 
   Future<void> addAlert() async {
     await sl<AlertService>().newAlert(Alert(
-        distance: 1,
         criticality: 1,
         description: "Yessssss",
         position:

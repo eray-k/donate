@@ -1,8 +1,10 @@
 import 'package:geolocator/geolocator.dart';
+import '../../../../auth/domain/model/position.dart' as model;
 
 class LocationService {
   const LocationService();
-  Future<Position> getLocation() async {
+
+  Future<model.Position> getLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -36,6 +38,10 @@ class LocationService {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    final data = await Geolocator.getCurrentPosition();
+    return model.Position(
+        latitude: data.latitude,
+        longitude: data.longitude,
+        timestamp: DateTime.now());
   }
 }

@@ -1,4 +1,5 @@
 import 'package:donate/apps/auth/domain/repository/auth_repository.dart';
+import 'package:donate/apps/auth/presentation/widgets/my_circle_avatar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../dependency_injection.dart';
@@ -35,8 +36,11 @@ class _AccountViewPageState extends State<AccountViewPage> {
           child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            MyCircleAvatar(
+              bloodType: account.bloodType,
+            ),
             Text('Display Name: ${account.displayName}'),
             Text('Email: ${account.email}'),
             Text(

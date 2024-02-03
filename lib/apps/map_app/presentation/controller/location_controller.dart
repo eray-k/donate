@@ -1,7 +1,7 @@
 import 'package:donate/dependency_injection.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../auth/domain/model/position.dart';
 import '../../data/service/local/location_service.dart';
 
 part 'location_controller.g.dart';

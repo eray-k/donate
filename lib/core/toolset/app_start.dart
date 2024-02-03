@@ -8,17 +8,10 @@ import '../../firebase_options.dart';
 Future<void> initalizeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   if (const bool.fromEnvironment("USE_FIREBASE_EMU")) {
-    String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
-    int authConfigPort = const int.fromEnvironment("AUTH_EMU_PORT");
-    int firestoreConfigPort = const int.fromEnvironment("FS_EMU_PORT");
-    String host =
-        configHost.isNotEmpty ? configHost : "10.0.2.2"; // Android localhost
-    int authPort = authConfigPort != 0 ? authConfigPort : 9099;
-    int firestorePort = firestoreConfigPort != 0 ? firestoreConfigPort : 8080;
-
-    await FirebaseAuth.instance.useAuthEmulator(host, authPort);
-    FirebaseFirestore.instance.useFirestoreEmulator(host, firestorePort);
+    const host = "192.168.1.31";
+    await FirebaseAuth.instance.useAuthEmulator(host, 9099);
+    FirebaseFirestore.instance.useFirestoreEmulator(host, 8080);
     debugPrint(
-        "Using Firebase Emulator at $host:$authPort (auth) and $host:$firestorePort (firestore)");
+        "Using Firebase Emulator at $host:9099 (auth) and $host:8080 (firestore)");
   }
 }

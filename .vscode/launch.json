@@ -10,9 +10,7 @@
       "type": "dart",
       "toolArgs": [
         "--dart-define", 
-        "USE_FIREBASE_EMU=true", 
-        "--dart-define", 
-        "FIREBASE_EMU_URL=192.168.1.28"
+        "USE_FIREBASE_EMU=true",
       ]
     },
     {
@@ -31,8 +29,6 @@
       "toolArgs": [
         "--dart-define", 
         "USE_FIREBASE_EMU=true", 
-        "--dart-define", 
-        "FIREBASE_EMU_URL=192.168.1.28"
       ],
       "flutterMode": "profile"
     },
@@ -43,8 +39,6 @@
       "toolArgs": [
         "--dart-define", 
         "USE_FIREBASE_EMU=true", 
-        "--dart-define", 
-        "FIREBASE_EMU_URL=192.168.1.28"
       ],
       "flutterMode": "release"
     },

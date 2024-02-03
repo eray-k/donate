@@ -30,21 +30,19 @@ class _FoldableMenuState extends State<FoldableMenu> {
                 ),
                 TextButton.icon(
                     icon: const Icon(Icons.person),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/account');
+                    },
                     label: const Text(
                       'My Information',
                     )),
                 TextButton.icon(
                     icon: const Icon(Icons.list),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/list');
+                    },
                     label: const Text(
                       'List View',
-                    )),
-                TextButton.icon(
-                    icon: const Icon(Icons.map),
-                    onPressed: () {},
-                    label: const Text(
-                      'Map View',
                     )),
                 TextButton.icon(
                     icon: const Icon(Icons.help),
