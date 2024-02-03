@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:donate/apps/map_app/domain/model/alert_model.dart';
 import 'package:donate/apps/map_app/presentation/controller/alert_controller.dart';
 import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
@@ -10,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/toolset/ui/custom_icons_icons.dart';
 import '../../../auth/domain/model/position.dart';
+import '../widgets/donation_info_window.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -20,6 +22,14 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   bool menuOpened = false;
+  final CustomInfoWindowController _customInfoWindowController =
+      CustomInfoWindowController();
+  @override
+  void dispose() {
+    _customInfoWindowController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final alerts = ref.watch(alertsProvider);
@@ -112,23 +122,47 @@ class _HomePageState extends ConsumerState<HomePage> {
       return const CustomProgressIndicator();
     }
 
-    final alertSet = asyncAlerts.value!
-        .map((e) => Marker(
-              infoWindow: InfoWindow(title: e.description),
-              markerId: const MarkerId('Your Location'),
-              position: LatLng(e.position.latitude, e.position.longitude),
-            ))
-        .toSet();
+    final alertSet = asyncAlerts.value!.map((e) {
+      final pos = LatLng(e.position.latitude, e.position.longitude);
+      return Marker(
+        onTap: () {
+          _customInfoWindowController.addInfoWindow!(
+              DonationInfoWindow(alert: e), pos);
+        },
+        markerId: const MarkerId('Your Location'),
+        position: pos,
+      );
+    }).toSet();
     final location = asyncLocation.value!;
-    return GoogleMap(
-      padding: const EdgeInsets.symmetric(vertical: 128),
-      zoomControlsEnabled: false,
-      myLocationEnabled: true,
-      initialCameraPosition: CameraPosition(
-        target: LatLng(location.latitude, location.longitude),
-        zoom: 11.0,
-      ),
-      markers: alertSet,
+
+    return Stack(
+      children: [
+        GoogleMap(
+          padding: const EdgeInsets.symmetric(vertical: 128),
+          zoomControlsEnabled: false,
+          myLocationEnabled: true,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(location.latitude, location.longitude),
+            zoom: 11.0,
+          ),
+          onTap: (position) {
+            _customInfoWindowController.hideInfoWindow!();
+          },
+          onCameraMove: (position) {
+            _customInfoWindowController.onCameraMove!();
+          },
+          onMapCreated: (GoogleMapController controller) async {
+            _customInfoWindowController.googleMapController = controller;
+          },
+          markers: alertSet,
+        ),
+        CustomInfoWindow(
+          controller: _customInfoWindowController,
+          height: 72,
+          width: 144,
+          offset: 50,
+        ),
+      ],
     );
   }
 }

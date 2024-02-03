@@ -44,6 +44,7 @@ class ListAlertsPage extends StatelessWidget {
         onPressed: () {
           debugPrint('Adding new alert');
           sl<AlertService>().newAlert(Alert(
+              bloodType: "A+",
               criticality: 1,
               description: "Lolz",
               position: Position(

@@ -7,15 +7,22 @@ class Alert {
   final int criticality;
   final Position position;
   final String? description;
+  final String bloodType;
+
   double distanceFrom(Position targetLocation) => distance(
       targetLocation.latitude,
       targetLocation.longitude,
       position.latitude,
       position.longitude);
   const Alert(
-      {this.description, required this.criticality, required this.position});
+      {required this.bloodType,
+      this.description,
+      required this.criticality,
+      required this.position});
+
   Map<String, dynamic> toDoc() {
     return {
+      'bloodType': bloodType,
       'criticality': criticality,
       'position': GeoPoint(position.latitude, position.longitude),
       'timeStamp': position.timestamp,
@@ -27,6 +34,7 @@ class Alert {
     final geoPoint = doc['position'] as GeoPoint;
     final timeStamp = doc['timeStamp'] as Timestamp;
     return Alert(
+        bloodType: doc['bloodType'],
         criticality: doc['criticality'],
         position: Position(
             latitude: geoPoint.latitude,
