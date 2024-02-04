@@ -8,7 +8,7 @@ import '../../firebase_options.dart';
 Future<void> initalizeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   if (const bool.fromEnvironment("USE_FIREBASE_EMU")) {
-    const host = "192.168.1.31";
+    const host = "192.168.1.34";
     await FirebaseAuth.instance.useAuthEmulator(host, 9099);
     FirebaseFirestore.instance.useFirestoreEmulator(host, 8080);
     debugPrint(

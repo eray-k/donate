@@ -1,33 +1,26 @@
 import 'package:donate/apps/auth/domain/repository/auth_repository.dart';
 import 'package:donate/apps/auth/presentation/widgets/my_circle_avatar.dart';
+import 'package:donate/apps/auth/presentation/controller/account_controller.dart';
+import 'package:donate/dependency_injection.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../dependency_injection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/model/account.dart';
 
-class AccountViewPage extends StatefulWidget {
+class AccountViewPage extends ConsumerWidget {
   const AccountViewPage({super.key});
 
   @override
-  State<AccountViewPage> createState() => _AccountViewPageState();
-}
-
-class _AccountViewPageState extends State<AccountViewPage> {
-  final repository = sl<AuthRepository>();
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future(repository.getCurrentAccount),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return _buildAccountView(snapshot.data!);
-        }
-        return const Center(child: CircularProgressIndicator());
-      },
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final account = ref.watch(accountRivProvider);
+    return account.when(
+        data: (data) => _buildAccountView(context, data, ref),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => Center(child: Text(error.toString())));
   }
 
-  Scaffold _buildAccountView(Account account) {
+  Scaffold _buildAccountView(
+      BuildContext context, Account account, WidgetRef ref) {
+    final repository = sl<AuthRepository>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Account Info'),
@@ -40,6 +33,7 @@ class _AccountViewPageState extends State<AccountViewPage> {
           children: [
             MyCircleAvatar(
               bloodType: account.bloodType,
+              size: 120,
             ),
             Text('Display Name: ${account.displayName}'),
             Text('Email: ${account.email}'),
@@ -65,7 +59,7 @@ class _AccountViewPageState extends State<AccountViewPage> {
                   onChanged: (String? newValue) async {
                     repository.currentAccount!.bloodType = newValue!;
                     await repository.updateCurrentAccount();
-                    setState(() {});
+                    ref.invalidate(accountRivProvider);
                   },
                 ),
               ],
@@ -73,6 +67,7 @@ class _AccountViewPageState extends State<AccountViewPage> {
             ElevatedButton(
                 onPressed: () {
                   repository.logout();
+                  ref.invalidate(accountRivProvider);
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       '/', (Route<dynamic> route) => false);
                 },

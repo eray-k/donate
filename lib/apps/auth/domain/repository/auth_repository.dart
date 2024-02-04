@@ -58,7 +58,7 @@ class AuthRepository {
       final credential = await authService.registerWithEmailAndPassword(
           email: account.email, password: password);
       debugPrint("Registered account: ${credential.user?.email}");
-      await getCurrentAccount(refresh: true);
+      await newAccount(account);
       return DataSuccess(credential.user!);
     } on FirebaseAuthException catch (e) {
       debugPrint("Error occured during register: ${e.message}");
@@ -71,6 +71,28 @@ class AuthRepository {
     await FirebaseAuth.instance.signOut();
   }
 
+  FutureOr<Account> newAccount(Account account) async {
+    if (currentAccount != null) {
+      throw Exception(
+          "On authRepository: Account field is not null, cannot create new account.");
+    }
+    final docRef =
+        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
+    await docRef.get().then((doc) async {
+      if (doc.exists) {
+        debugPrint("User exists, cannot create");
+      } else {
+        debugPrint("User does not exist, creating new account in database");
+        currentAccount = account;
+        await docRef.set(currentAccount!.toDocument());
+      }
+    });
+    await updateLocation();
+    debugPrint("Current account: $currentAccount");
+    return currentAccount!;
+  }
+
+//TODO: newAccount in register
   FutureOr<Account> getCurrentAccount({bool refresh = false}) async {
     if (!refresh && currentAccount != null) {
       return currentAccount!;

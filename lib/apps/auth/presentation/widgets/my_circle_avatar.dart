@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MyCircleAvatar extends StatelessWidget {
-  const MyCircleAvatar({super.key, this.bloodType});
+  const MyCircleAvatar({super.key, this.bloodType, required this.size});
   final String? bloodType;
+  final double size;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      height: 120,
+      width: size,
+      height: size,
       alignment: Alignment.center,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
@@ -18,17 +19,27 @@ class MyCircleAvatar extends StatelessWidget {
         ),
       ),
       child: bloodType != null
-          ? Text(
-              bloodType!,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 48,
-              ),
+          ? Stack(
+              alignment: Alignment.center,
+              children: [
+                Icon(
+                  Icons.person,
+                  size: size * .8,
+                  color: Colors.black.withOpacity(0.1),
+                ),
+                Text(
+                  bloodType!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: size * 0.4,
+                  ),
+                ),
+              ],
             )
-          : const Icon(
+          : Icon(
               Icons.person,
-              size: 60,
+              size: size / 2,
               color: Colors.white,
             ),
     );

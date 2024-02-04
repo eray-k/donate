@@ -6,17 +6,12 @@ import '../../../auth/domain/model/position.dart';
 class Alert {
   final int criticality;
   final Position position;
-  final String? description;
+  final String description;
   final String bloodType;
 
-  double distanceFrom(Position targetLocation) => distance(
-      targetLocation.latitude,
-      targetLocation.longitude,
-      position.latitude,
-      position.longitude);
   const Alert(
       {required this.bloodType,
-      this.description,
+      required this.description,
       required this.criticality,
       required this.position});
 
@@ -41,5 +36,33 @@ class Alert {
             longitude: geoPoint.longitude,
             timestamp: timeStamp.toDate()),
         description: doc['description']);
+  }
+}
+
+class AlertWithDistance extends Alert {
+  late final int distanceInMeters; // Not stored in Firestore
+
+  AlertWithDistance(Alert alert, Position targetLocation)
+      : super(
+            bloodType: alert.bloodType,
+            description: alert.description,
+            criticality: alert.criticality,
+            position: alert.position) {
+    distanceInMeters = _calculateDistanceInMeters(targetLocation);
+  }
+
+  ///Return the distance in meters (rounded to the nearest 10 meters)
+  int _calculateDistanceInMeters(Position targetLocation) {
+    final dist = distance(targetLocation.latitude, targetLocation.longitude,
+        position.latitude, position.longitude);
+    final distanceInDesimeters = (dist * 100).round();
+    return distanceInDesimeters * 10;
+  }
+
+  String toDistanceString() {
+    final distanceText = distanceInMeters >= 1000
+        ? "${(distanceInMeters / 1000).toStringAsFixed(1)} km"
+        : "$distanceInMeters m";
+    return distanceText;
   }
 }

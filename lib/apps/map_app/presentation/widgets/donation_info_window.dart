@@ -35,7 +35,7 @@ class DonationInfoWindow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(alert.description ?? "",
+                    Text(alert.description,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,

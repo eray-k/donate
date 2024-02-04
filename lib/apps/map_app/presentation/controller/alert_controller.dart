@@ -1,4 +1,5 @@
 import 'package:donate/apps/map_app/data/service/remote/alert_service.dart';
+import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../dependency_injection.dart';
@@ -11,5 +12,13 @@ class Alerts extends _$Alerts {
   @override
   FutureOr<List<Alert>> build() async {
     return await sl<AlertService>().getAlerts();
+  }
+
+  Future<void> addAlert() async {
+    await sl<AlertService>().newAlert((Alert(
+        bloodType: "A+",
+        criticality: 1,
+        description: "ODTÜ Sağlık ve Rehberlik Merkezi",
+        position: ref.watch(locationProvider).value!)));
   }
 }

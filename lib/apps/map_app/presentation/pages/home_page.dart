@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:custom_info_window/custom_info_window.dart';
+import 'package:donate/apps/auth/presentation/widgets/my_circle_avatar.dart';
 import 'package:donate/apps/map_app/domain/model/alert_model.dart';
 import 'package:donate/apps/map_app/presentation/controller/alert_controller.dart';
 import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
@@ -11,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/toolset/ui/custom_icons_icons.dart';
 import '../../../auth/domain/model/position.dart';
+import '../../../auth/presentation/controller/account_controller.dart';
 import '../widgets/donation_info_window.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -34,6 +36,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final alerts = ref.watch(alertsProvider);
     final location = ref.watch(locationProvider);
+    final account = ref.watch(accountRivProvider);
+
     return Scaffold(
       body: ColoredBox(
         color: Theme.of(context).colorScheme.primary,
@@ -70,14 +74,18 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/account');
-                      },
-                      icon: Image.asset(
-                        'assets/images/logo_shadow.png',
-                        width: 60,
-                      ),
-                    )),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/account');
+                        },
+                        icon: account is AsyncData
+                            ? MyCircleAvatar(
+                                bloodType: account.value!.bloodType,
+                                size: 60,
+                              )
+                            : const MyCircleAvatar(
+                                bloodType: "...",
+                                size: 60,
+                              ))),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -86,7 +94,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.arrow_upward),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/list');
+                      Navigator.of(context).pushNamed(
+                        '/list',
+                      );
                     },
                     label: const Text('List View'),
                   ),
