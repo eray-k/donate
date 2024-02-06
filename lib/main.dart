@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Donate',
       debugShowCheckedModeBanner: false, // remove debug banner
-      theme: theme,
+      theme: MyTheme.theme,
       initialRoute: '/', // initial route
       routes: {
         '/': (context) => const MyInitialRoute(),
