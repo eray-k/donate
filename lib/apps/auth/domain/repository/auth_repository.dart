@@ -28,6 +28,9 @@ class AuthRepository {
       {String email = '',
       String password = '',
       bool withGoogle = false}) async {
+    FirebaseAuth.instance.userChanges().listen((event) {
+      canUpdate = true;
+    });
     try {
       final credential = withGoogle
           ? await authService.loginWithGoogle()
@@ -92,7 +95,6 @@ class AuthRepository {
     return currentAccount!;
   }
 
-//TODO: newAccount in register
   FutureOr<Account> getCurrentAccount({bool refresh = false}) async {
     if (!refresh && currentAccount != null) {
       return currentAccount!;

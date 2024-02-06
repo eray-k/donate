@@ -14,13 +14,23 @@
       ]
     },
     {
+      "name": "PRODUCTION_DEBUG",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define", 
+        "USE_FIREBASE_EMU=false"
+      ],
+    },
+    {
       "name": "PRODUCTION",
       "request": "launch",
       "type": "dart",
       "toolArgs": [
         "--dart-define", 
         "USE_FIREBASE_EMU=false"
-      ]
+      ],
+      "flutterMode": "release"
     },
     {
       "name": "PROFILE w/EMULATOR",

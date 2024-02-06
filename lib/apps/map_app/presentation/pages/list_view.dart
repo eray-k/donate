@@ -32,7 +32,7 @@ class ListAlertsPage extends ConsumerWidget {
             sortedAlerts.sort(
                 (a, b) => a.distanceInMeters.compareTo(b.distanceInMeters));
             return ListView.builder(
-              itemCount: data.length * 2 - 1, // Add dividers
+              itemCount: data.isEmpty ? 0 : data.length * 2 - 1, // Add dividers
               itemBuilder: (context, index) {
                 if (index.isOdd) return const Divider();
                 final a = sortedAlerts[index ~/ 2];

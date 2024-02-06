@@ -45,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
         constraints: const BoxConstraints(maxWidth: 250),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Image(
               image: AssetImage("assets/images/logo_flat.png"),
@@ -98,6 +99,8 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 Navigator.of(context).pushNamed("/register");
               },
+              style: TextButtonTheme.of(context).style?.copyWith(
+                  minimumSize: MaterialStateProperty.all(const Size(0, 0))),
               child: Text("Don't have an account?",
                   style: TextStyle(
                       fontSize: 12, color: Colors.black.withOpacity(0.4))),

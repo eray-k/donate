@@ -14,11 +14,12 @@ class Alerts extends _$Alerts {
     return await sl<AlertService>().getAlerts();
   }
 
+  //ONLY FOR TESTING
   Future<void> addAlert() async {
     await sl<AlertService>().newAlert((Alert(
         bloodType: "A+",
         criticality: 1,
-        description: "ODTÜ Sağlık ve Rehberlik Merkezi",
+        description: "Test Location",
         position: ref.watch(locationProvider).value!)));
   }
 }
