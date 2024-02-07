@@ -1,4 +1,5 @@
 import 'package:donate/apps/auth/domain/repository/auth_repository.dart';
+import 'package:donate/apps/auth/presentation/pages/account_edit_page.dart';
 import 'package:donate/apps/auth/presentation/pages/signup_page.dart';
 import 'package:donate/apps/map_app/presentation/pages/list_view.dart';
 import 'package:donate/core/toolset/app_start.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/account': (context) => const AccountViewPage(),
         '/list': (context) => const ListAlertsPage(),
+        '/edit': (context) => const AccountEditPage()
       },
     );
   }
