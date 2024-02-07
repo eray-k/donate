@@ -46,34 +46,35 @@ class _HomePageState extends ConsumerState<HomePage> {
             color: Colors.white,
             child: Stack(children: [
               _buildMap(alerts, location),
-              if (!menuOpened)
-                Padding(
-                    // Menu Button
-                    padding: const EdgeInsets.all(16.0),
-                    child: IconButton.filled(
-                      onPressed: () {
-                        setState(() {
-                          menuOpened = true;
-                        });
-                      },
-                      style: IconButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Theme.of(context).colorScheme.primary,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular(16.0),
-                        )),
-                        iconSize: 36,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (!menuOpened)
+                      IconButton.filled(
+                        onPressed: () {
+                          setState(() {
+                            menuOpened = true;
+                          });
+                        },
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                            Radius.circular(16.0),
+                          )),
+                          iconSize: 36,
+                        ),
+                        icon: const Icon(
+                          CustomIcons.menu,
+                        ),
                       ),
-                      icon: const Icon(
-                        CustomIcons.menu,
-                      ),
-                    )),
-              Positioned(
-                right: 0,
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: IconButton(
+                    IconButton(
+                        padding: EdgeInsets.zero,
                         onPressed: () {
                           Navigator.of(context).pushNamed('/account');
                         },
@@ -85,7 +86,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                             : const MyCircleAvatar(
                                 bloodType: "...",
                                 size: 60,
-                              ))),
+                              ))
+                  ],
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,

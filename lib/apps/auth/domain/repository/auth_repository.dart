@@ -99,6 +99,7 @@ class AuthRepository {
     if (!refresh && currentAccount != null) {
       return currentAccount!;
     }
+    if (currentUser == null) return Future.error("User is null");
     final docRef =
         FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
     await docRef.get().then((doc) async {
@@ -120,6 +121,10 @@ class AuthRepository {
   }
 
   Future<void> updateCurrentAccount() async {
+    if (currentUser == null) {
+      debugPrint("Current user is null, cannot update account");
+      return;
+    }
     final docRef =
         FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
     await docRef.update(currentAccount!.toDocument());
@@ -128,6 +133,10 @@ class AuthRepository {
   bool canUpdate = true;
   Future<void> updateLocation() async {
     if (!canUpdate) return;
+    if (currentAccount == null) {
+      debugPrint("Current account is null, cannot update location");
+      return;
+    }
     canUpdate = false;
     Future.delayed(const Duration(minutes: 3), () => canUpdate = true);
     final data = await sl<LocationService>().getLocation();
