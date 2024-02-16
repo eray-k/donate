@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:donate/apps/map_app/data/service/remote/alert_service.dart';
 import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,11 +17,11 @@ class Alerts extends _$Alerts {
   }
 
   //ONLY FOR TESTING
-  Future<void> addAlert() async {
+  Future<void> addAlert(String title, String bloodType) async {
     await sl<AlertService>().newAlert((Alert(
-        bloodType: "A+",
+        bloodType: bloodType,
         criticality: 1,
-        description: "Test Location",
+        description: title,
         position: ref.watch(locationProvider).value!)));
   }
 }

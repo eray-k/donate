@@ -1,4 +1,5 @@
 import 'package:donate/core/toolset/ui/ui_tools.dart';
+import 'package:donate/core/ui/widgets/blood_type_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,18 +24,8 @@ class AccountEditPage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Change blood type: '),
-                    DropdownButton<String>(
+                    BloodTypeDropdown(
                       value: account.bloodType,
-                      items: const [
-                        DropdownMenuItem(value: 'A+', child: Text('A+')),
-                        DropdownMenuItem(value: 'A-', child: Text('A-')),
-                        DropdownMenuItem(value: 'B+', child: Text('B+')),
-                        DropdownMenuItem(value: 'B-', child: Text('B-')),
-                        DropdownMenuItem(value: 'AB+', child: Text('AB+')),
-                        DropdownMenuItem(value: 'AB-', child: Text('AB-')),
-                        DropdownMenuItem(value: '0+', child: Text('0+')),
-                        DropdownMenuItem(value: '0-', child: Text('0-')),
-                      ],
                       onChanged: (String? newValue) async {
                         repository.currentAccount!.bloodType = newValue!;
                         await repository.updateCurrentAccount();

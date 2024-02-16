@@ -2,6 +2,7 @@ import 'package:donate/apps/map_app/domain/model/alert_model.dart';
 import 'package:donate/apps/map_app/presentation/controller/alert_controller.dart';
 import 'package:donate/apps/map_app/presentation/controller/location_controller.dart';
 import 'package:donate/apps/map_app/presentation/widgets/my_list_item.dart';
+import 'package:donate/apps/map_app/presentation/widgets/notify_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -47,7 +48,12 @@ class ListAlertsPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           debugPrint('Adding new alert');
-          ref.read(alertsProvider.notifier).addAlert();
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const NotifyAlertDialog();
+            },
+          );
         },
         child: const Icon(Icons.add),
       ),

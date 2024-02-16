@@ -24,13 +24,8 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   bool menuOpened = false;
-  final CustomInfoWindowController _customInfoWindowController =
-      CustomInfoWindowController();
-  @override
-  void dispose() {
-    _customInfoWindowController.dispose();
-    super.dispose();
-  }
+  bool infoWindowOpened = false;
+  Alert? selectedAlert;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +100,18 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                 ),
               ),
+              AnimatedOpacity(
+                duration: const Duration(milliseconds: 200),
+                opacity: infoWindowOpened ? 1 : 0,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                      padding: const EdgeInsets.only(top: 200.0),
+                      child: selectedAlert != null
+                          ? DonationInfoWindow(alert: selectedAlert!)
+                          : const SizedBox()),
+                ),
+              ),
               if (menuOpened)
                 FoldableMenu(onBackPressed: () {
                   setState(() {
@@ -139,8 +146,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       final pos = LatLng(e.position.latitude, e.position.longitude);
       return Marker(
         onTap: () {
-          _customInfoWindowController.addInfoWindow!(
-              DonationInfoWindow(alert: e), pos);
+          _showInfoWindow(e);
         },
         markerId: const MarkerId('Your Location'),
         position: pos,
@@ -159,23 +165,24 @@ class _HomePageState extends ConsumerState<HomePage> {
             zoom: 11.0,
           ),
           onTap: (position) {
-            _customInfoWindowController.hideInfoWindow!();
-          },
-          onCameraMove: (position) {
-            _customInfoWindowController.onCameraMove!();
-          },
-          onMapCreated: (GoogleMapController controller) async {
-            _customInfoWindowController.googleMapController = controller;
+            _hideInfoWindow();
           },
           markers: alertSet,
         ),
-        CustomInfoWindow(
-          controller: _customInfoWindowController,
-          height: 72,
-          width: 144,
-          offset: 50,
-        ),
       ],
     );
+  }
+
+  void _hideInfoWindow() {
+    setState(() {
+      infoWindowOpened = false;
+    });
+  }
+
+  void _showInfoWindow(Alert alert) {
+    setState(() {
+      selectedAlert = alert;
+      infoWindowOpened = true;
+    });
   }
 }

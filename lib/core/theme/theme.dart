@@ -21,13 +21,13 @@ class MyTheme {
         backgroundColor: primaryColor,
       ),
     ),
-    textButtonTheme: TextButtonThemeData(
+    /* textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
           foregroundColor: Colors.black.withOpacity(0.7),
           minimumSize: const Size.fromHeight(0),
           alignment: AlignmentDirectional.centerStart,
           textStyle: const TextStyle(fontSize: 20)),
-    ),
+    ), */
     useMaterial3: true,
   );
 }

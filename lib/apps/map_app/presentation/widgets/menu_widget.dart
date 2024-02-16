@@ -8,6 +8,11 @@ class FoldableMenu extends StatefulWidget {
 }
 
 class _FoldableMenuState extends State<FoldableMenu> {
+  final style = TextButton.styleFrom(
+      foregroundColor: Colors.black.withOpacity(0.7),
+      minimumSize: const Size.fromHeight(0),
+      alignment: AlignmentDirectional.centerStart,
+      textStyle: const TextStyle(fontSize: 20));
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -29,27 +34,33 @@ class _FoldableMenuState extends State<FoldableMenu> {
                   onPressed: widget.onBackPressed,
                 ),
                 TextButton.icon(
-                    icon: const Icon(Icons.person),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/account');
-                    },
-                    label: const Text(
-                      'My Information',
-                    )),
+                  icon: const Icon(Icons.person),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/account');
+                  },
+                  label: const Text(
+                    'My Information',
+                  ),
+                  style: style,
+                ),
                 TextButton.icon(
-                    icon: const Icon(Icons.list),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/list');
-                    },
-                    label: const Text(
-                      'List View',
-                    )),
+                  icon: const Icon(Icons.list),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/list');
+                  },
+                  label: const Text(
+                    'List View',
+                  ),
+                  style: style,
+                ),
                 TextButton.icon(
-                    icon: const Icon(Icons.help),
-                    onPressed: () {},
-                    label: const Text(
-                      'Help',
-                    )),
+                  icon: const Icon(Icons.help),
+                  onPressed: () {},
+                  label: const Text(
+                    'Help',
+                  ),
+                  style: style,
+                ),
               ],
             ),
           )),
