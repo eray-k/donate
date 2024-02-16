@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:custom_info_window/custom_info_window.dart';
 import 'package:donate/apps/auth/presentation/widgets/my_circle_avatar.dart';
 import 'package:donate/apps/map_app/domain/model/alert_model.dart';
 import 'package:donate/apps/map_app/presentation/controller/alert_controller.dart';

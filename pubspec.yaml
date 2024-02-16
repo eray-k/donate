@@ -24,7 +24,6 @@ dependencies:
   google_sign_in: ^6.1.6
   flutter_native_splash: ^2.3.7
   firebase_core: ^2.24.2
-  custom_info_window: ^1.0.1
   connectivity_plus: ^5.0.2
 
 dev_dependencies:
