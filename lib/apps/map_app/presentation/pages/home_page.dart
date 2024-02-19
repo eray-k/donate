@@ -144,10 +144,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     final alertSet = asyncAlerts.value!.map((e) {
       final pos = LatLng(e.position.latitude, e.position.longitude);
       return Marker(
-        onTap: () {
+        onTap: () async {
+          await Future.delayed(const Duration(milliseconds: 200));
           _showInfoWindow(e);
         },
-        markerId: const MarkerId('Your Location'),
+        markerId: MarkerId(e.hashCode.toString()),
         position: pos,
       );
     }).toSet();
@@ -163,6 +164,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             target: LatLng(location.latitude, location.longitude),
             zoom: 11.0,
           ),
+          onCameraMoveStarted: () {
+            _hideInfoWindow();
+          },
           onTap: (position) {
             _hideInfoWindow();
           },
