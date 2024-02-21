@@ -3,7 +3,7 @@ import 'package:donate/apps/auth/presentation/pages/account_edit_page.dart';
 import 'package:donate/apps/auth/presentation/pages/signup_page.dart';
 import 'package:donate/apps/map_app/presentation/pages/list_view.dart';
 import 'package:donate/core/toolset/app_start.dart';
-import 'package:donate/core/toolset/connnectivity_watcher.dart';
+import 'package:donate/core/toolset/requirements_watcher.dart';
 import 'package:donate/core/toolset/lifecycle_watcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -58,10 +58,10 @@ class MyInitialRoute extends StatelessWidget {
           FlutterNativeSplash.remove();
           if (snapshot.hasData) {
             sl<AuthRepository>().getCurrentAccount();
-            return const ConnectivityWatcher(
+            return const RequirementsWatcher(
                 child: LifecycleWatcher(child: HomePage()));
           } else {
-            return const ConnectivityWatcher(child: LoginPage());
+            return const RequirementsWatcher(child: LoginPage());
           }
         });
   }
