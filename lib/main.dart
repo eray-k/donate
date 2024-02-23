@@ -5,6 +5,7 @@ import 'package:donate/apps/map_app/presentation/pages/list_view.dart';
 import 'package:donate/core/toolset/app_start.dart';
 import 'package:donate/core/toolset/requirements_watcher.dart';
 import 'package:donate/core/toolset/lifecycle_watcher.dart';
+import 'package:donate/core/ui/widgets/custom_progress_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -57,9 +58,16 @@ class MyInitialRoute extends StatelessWidget {
         builder: (context, snapshot) {
           FlutterNativeSplash.remove();
           if (snapshot.hasData) {
-            sl<AuthRepository>().getCurrentAccount();
-            return const RequirementsWatcher(
-                child: LifecycleWatcher(child: HomePage()));
+            return RequirementsWatcher(
+                child: LifecycleWatcher(
+                    child: FutureBuilder(
+                        future: Future(() async =>
+                            await sl<AuthRepository>().getCurrentAccount()),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) return const HomePage();
+                          if (snapshot.hasError) return const Placeholder();
+                          return const CustomProgressIndicator();
+                        })));
           } else {
             return const RequirementsWatcher(child: LoginPage());
           }

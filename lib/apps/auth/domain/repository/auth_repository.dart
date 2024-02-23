@@ -4,6 +4,7 @@ import 'package:donate/apps/auth/data/service/remote/auth_service.dart';
 import 'package:donate/apps/map_app/data/service/local/location_service.dart';
 import 'package:donate/core/toolset/data_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../dependency_injection.dart';
@@ -109,11 +110,13 @@ class AuthRepository {
       } else {
         debugPrint("User does not exist, creating new account in database");
         currentAccount = Account(
-            displayName: currentUser!.displayName ?? '',
-            email: currentUser!.email ?? '',
-            position: null);
+          displayName: currentUser!.displayName ?? '',
+          email: currentUser!.email ?? '',
+          position: null,);
         await docRef.set(currentAccount!.toDocument());
       }
+      //Store FCM token to send notifications later
+      doc.data()!['fcmToken'] = await FirebaseMessaging.instance.getToken();
     });
     await updateLocation();
     debugPrint("Current account: $currentAccount");
