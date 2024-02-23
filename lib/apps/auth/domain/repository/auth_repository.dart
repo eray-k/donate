@@ -112,11 +112,12 @@ class AuthRepository {
         currentAccount = Account(
           displayName: currentUser!.displayName ?? '',
           email: currentUser!.email ?? '',
-          position: null,);
+          position: null,
+        );
         await docRef.set(currentAccount!.toDocument());
       }
       //Store FCM token to send notifications later
-      doc.data()!['fcmToken'] = await FirebaseMessaging.instance.getToken();
+      docRef.update({'fcmToken': await FirebaseMessaging.instance.getToken()});
     });
     await updateLocation();
     debugPrint("Current account: $currentAccount");
