@@ -1,4 +1,5 @@
-# Donate
+
+<img src="/images/banner.png" alt="Donate_banner" style="width: 900px;">
 
 A Flutter project for GDSC Solution Challenge 2024.
 
@@ -27,6 +28,8 @@ Backend:
 - Google Cloud API
 - Firebase API
 
+<img src="/images/programs.png" alt="Donate_programs" style="width: 900px;">
+
 ## Installing The App
 
 Download the latest `.apk` version in "Releases" section. Run it on an Android phone or emulator.
@@ -35,6 +38,8 @@ App requires internet connection and Location permission.
 > Android may throw security warning since app is not downloaded through Play Store, just ignore them.
 
 ## Project Owners
+
+<img src="/images/team_member.png" alt="Donate_team" style="width: 900px;">
 
 Please contact us if you have any questions, complaints or feedbacks about this project.
 
