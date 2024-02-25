@@ -7,7 +7,7 @@ A Flutter project for GDSC Solution Challenge 2024.
 Donate is a mobile application (currently only for Android) developed to quickly find donors in cases of urgent blood need. Donate allows users to instantly request blood donations and notifies nearby individuals with compatible blood types, minimizing the time to find a donor. With its functionality on mobile devices and simple user interface, Donate has the potential to be easily accessible and usable by everyone.
 
 ## Check Out Our Cool YouTube Video!
-[<img src="/images/thubnai02.png" alt="Donate_banner" style="width: 900px;">](http://www.youtube.com/watch?v=h_KQVr2AGCk)
+[<img src="/images/ThumbnailPLAY.jpg" alt="Donate_banner" style="width: 900px;">](http://www.youtube.com/watch?v=h_KQVr2AGCk)
 
 
 ## Software Architecture
