@@ -65,7 +65,18 @@ class MyInitialRoute extends StatelessWidget {
                             await sl<AuthRepository>().getCurrentAccount()),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) return const HomePage();
-                          if (snapshot.hasError) return const Placeholder();
+                          if (snapshot.hasError) {
+                            debugPrint(snapshot.error.toString());
+                            return const Scaffold(
+                              body: Center(
+                                child: Text(
+                                  'Sorry, please try again later.',
+                                  style: TextStyle(fontSize: 20),
+                                  softWrap: true,
+                                ),
+                              ),
+                            );
+                          }
                           return const CustomProgressIndicator();
                         })));
           } else {
