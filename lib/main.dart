@@ -15,6 +15,7 @@ import 'package:donate/apps/auth/presentation/pages/login_page.dart';
 import 'package:donate/core/theme/theme.dart';
 import 'package:donate/dependency_injection.dart';
 import 'apps/auth/presentation/pages/account_view_page.dart';
+import 'apps/map_app/presentation/pages/about_page.dart';
 import 'apps/map_app/presentation/pages/home_page.dart';
 
 void main() async {
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/account': (context) => const AccountViewPage(),
         '/list': (context) => const ListAlertsPage(),
-        '/edit': (context) => const AccountEditPage()
+        '/edit': (context) => const AccountEditPage(),
+        '/about': (context) => const AboutPage(),
       },
     );
   }

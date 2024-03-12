@@ -55,9 +55,11 @@ class _FoldableMenuState extends State<FoldableMenu> {
                 ),
                 TextButton.icon(
                   icon: const Icon(Icons.help),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/about');
+                  },
                   label: const Text(
-                    'Help',
+                    'About',
                   ),
                   style: style,
                 ),
